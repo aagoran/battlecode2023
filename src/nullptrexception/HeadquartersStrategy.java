@@ -16,7 +16,7 @@ public class HeadquartersStrategy {
             rc.buildAnchor(Anchor.STANDARD);
             rc.setIndicatorString("Building anchor! " + rc.getAnchor());
         }
-        if ((rc.getResourceAmount(ResourceType.ADAMANTIUM) + rc.getResourceAmount(ResrouceType.MANA) < 200) && RobotPlayer.rng.nextBoolean()) {
+        if ((rc.getResourceAmount(ResourceType.ADAMANTIUM) + rc.getResourceAmount(ResourceType.MANA) < 200) && RobotPlayer.rng.nextBoolean()) {
             // Let's try to build a carrier.
             rc.setIndicatorString("Trying to build a carrier");
             if (rc.canBuildRobot(RobotType.CARRIER, newLoc)) {
