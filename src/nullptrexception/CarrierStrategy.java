@@ -41,7 +41,7 @@ public class CarrierStrategy {
                 Direction dir = me.directionTo(wellLocation);
 
                 if (!rc.canCollectResource(me, 1)) {
-                    RobotPlayer.moveTowards(rc, wellLocation);
+                    BugZero.moveTowards(rc, wellLocation);
                 }
 
             }
@@ -52,7 +52,7 @@ public class CarrierStrategy {
         }
 
         if (total == GameConstants.CARRIER_CAPACITY) {
-            RobotPlayer.moveTowards(rc, headquartersLocation);
+            BugZero.moveTowards(rc, headquartersLocation);
         }
     }
 
