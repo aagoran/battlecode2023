@@ -9,7 +9,8 @@ public class CarrierStrategy {
      */
     static void runCarrier(RobotController rc) throws GameActionException {
 
-        //test
+        //test code and stuff
+        System.out.println("test");
 
     }
 }
