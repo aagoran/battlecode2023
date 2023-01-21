@@ -1,4 +1,4 @@
-package lectureplayer;
+package nullptrexception;
 
 import java.util.List;
 
