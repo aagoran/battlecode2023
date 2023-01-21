@@ -106,4 +106,14 @@ public strictfp class RobotPlayer {
         // Your code should never reach here (unless it's intentional)! Self-destruction imminent...
     }
 
+    static void moveRandom(RobotController rc) throws GameActionException {
+        Direction dir = directions[rng.nextInt(directions.length)];
+        if (rc.canMove(dir)) rc.move(dir);
+    }
+
+    static void moveTowards(RobotController rc, MapLocation loc) throws GameActionException {
+        Direction dir = rc.getLocation().directionTo(loc);
+        if (rc.canMove(dir)) rc.move(dir);
+        else moveRandom(rc);
+    }
 }
