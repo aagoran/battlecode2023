@@ -219,4 +219,20 @@ class Communication {
         m--;
         return new MapLocation(m % rc.getMapWidth(), m / rc.getMapWidth());
     }
+
+    static void scanHeadquarters(RobotController rc, MapLocation headquartersLocation) throws GameActionException {
+        RobotInfo[] robots = rc.senseNearbyRobots();
+        for (RobotInfo robot : robots) {
+            if (robot.getTeam() == rc.getTeam() && robot.getType() == RobotType.HEADQUARTERS) {
+                headquartersLocation = robot.getLocation();
+                break;
+            }
+        }
+    }
+
+    static void scanWells(RobotController rc, MapLocation wellLocation) throws GameActionException {
+        WellInfo[] wells = rc.senseNearbyWells();
+        if (wells.length > 0) wellLocation = wells[0].getMapLocation();
+    }
+
 }

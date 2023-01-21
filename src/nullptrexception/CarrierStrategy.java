@@ -15,12 +15,12 @@ public class CarrierStrategy {
     static void runCarrier(RobotController rc) throws GameActionException {
         // Scan for headquarters
         if (headquartersLocation == null) {
-            scanHeadquarters(rc);
+            Communication.scanHeadquarters(rc, headquartersLocation);
         }
 
         // Scan for wells
         if (wellLocation == null) {
-            scanWells(rc);
+            Communication.scanWells(rc, wellLocation);
         }
 
         // Collect resource from well if possible
@@ -56,20 +56,6 @@ public class CarrierStrategy {
         }
     }
 
-    static void scanHeadquarters(RobotController rc) throws GameActionException {
-        RobotInfo[] robots = rc.senseNearbyRobots();
-        for (RobotInfo robot : robots) {
-            if (robot.getTeam() == rc.getTeam() && robot.getType() == RobotType.HEADQUARTERS) {
-                headquartersLocation = robot.getLocation();
-                break;
-            }
-        }
-    }
-
-    static void scanWells(RobotController rc) throws GameActionException {
-        WellInfo[] wells = rc.senseNearbyWells();
-        if (wells.length > 0) wellLocation = wells[0].getMapLocation();
-    }
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
