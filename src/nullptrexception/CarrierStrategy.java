@@ -7,12 +7,15 @@ public class CarrierStrategy {
     static MapLocation headquartersLocation;
     static MapLocation wellLocation;
     static MapLocation islandLocation;
+    static ResourceType resource;
+    static boolean attemptedWellUpdate = false;
 
     /**
      * Run a single turn for a Carrier.
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runCarrier(RobotController rc) throws GameActionException {
+        rc.setIndicatorString("well location: " + rc.readSharedArray(14));
         // Scan for headquarters
         if (headquartersLocation == null) {
             Communication.scanHeadquarters(rc, headquartersLocation);
@@ -56,10 +59,12 @@ public class CarrierStrategy {
         }
     }
 
-
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-
+        if(!attemptedWellUpdate){ //if robot has not checked with shared array, check for update
+            Communication.updateWellLocation(rc, resource, wellLocation);
+            attemptedWellUpdate = true;
+        }
         if (amount > 0) {
             if (rc.canTransferResource(headquartersLocation, type, amount)) rc.transferResource(headquartersLocation, type, amount);
         }
@@ -68,4 +73,6 @@ public class CarrierStrategy {
     static int getTotalResources(RobotController rc) throws GameActionException {
         return rc.getResourceAmount(ResourceType.ADAMANTIUM) + rc.getResourceAmount(ResourceType.MANA);
     }
+
+
 }

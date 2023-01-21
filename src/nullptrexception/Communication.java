@@ -205,6 +205,41 @@ class Communication {
         return answer;
     }
 
+    static void updateWellLocation(RobotController rc, ResourceType resource, MapLocation wellLoc) throws GameActionException { 
+        if(rc.canWriteSharedArray(0,0)) { //checks if it can write
+            int location = locationToInt(rc, wellLoc);
+            boolean exists = false;
+            int emptySpot = 63;
+            if(resource.equals(ResourceType.ADAMANTIUM)) { //checks resource type
+               for (int i = 8; i < 12; i++) {
+                if (rc.readSharedArray(i) == location) { //checks location is not stored
+                    exists = true;
+                }
+                if (rc.readSharedArray(i) == 0) {
+                    emptySpot = i;
+                }
+               }
+               if(!exists) {
+                rc.writeSharedArray(emptySpot, location);
+               }
+                
+            } else if (resource.equals(ResourceType.MANA)) {
+                for (int i = 12; i < 15; i++) {
+                    if (rc.readSharedArray(i) == location) { //checks location is not stored
+                        exists = true;
+                    }
+                    if (rc.readSharedArray(i) == 0) {
+                        emptySpot = i;
+                    }
+                   }
+                   if(!exists) {
+                    rc.writeSharedArray(emptySpot, location);
+                   }
+            }
+        }
+        
+    }
+
     private static int locationToInt(RobotController rc, MapLocation m) {
         if (m == null) {
             return 0;
