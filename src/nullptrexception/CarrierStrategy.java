@@ -23,7 +23,7 @@ public class CarrierStrategy {
 
         // Scan for wells
         if (wellLocation == null) {
-            Communication.scanWells(rc, wellLocation);
+            Communication.scanWells(rc, wellLocation, resource);
         }
 
         // Collect resource from well if possible
@@ -61,7 +61,7 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(!attemptedWellUpdate){ //if robot has not checked with shared array, check for update
+        if(!attemptedWellUpdate && wellLocation != null && resource != null){ //if robot has not checked with shared array, check for update
             Communication.updateWellLocation(rc, resource, wellLocation);
             attemptedWellUpdate = true;
         }
