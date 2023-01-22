@@ -14,7 +14,6 @@ public class HeadquartersStrategy {
         if (rc.canBuildAnchor(Anchor.STANDARD) && rc.getResourceAmount(ResourceType.ADAMANTIUM) > 1000) {
             // If we can build an anchor do it!
             rc.buildAnchor(Anchor.STANDARD);
-            // rc.setIndicatorString("Building anchor! " + rc.getAnchor());
         }
         if (RobotPlayer.rng.nextBoolean()) {
             // Let's try to build a carrier.
