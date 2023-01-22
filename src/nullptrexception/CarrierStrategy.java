@@ -8,16 +8,17 @@ public class CarrierStrategy {
     static MapLocation wellLocation;
     static MapLocation islandLocation;
     static ResourceType resource;
-    static boolean attemptedWellUpdate = false;
+    static boolean attemptedWellUpdateAd = false;
+    static boolean attemptedWellUpdateMana = false;
+
 
     /**
      * Run a single turn for a Carrier.
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runCarrier(RobotController rc) throws GameActionException {
-        rc.setIndicatorString("Well Location " + wellLocation);
-        //rc.setIndicatorString("well location: " + rc.readSharedArray(14));
-        // Scan for headquarters
+        rc.setIndicatorString("Well Location " + wellLocation  + " " + rc.readSharedArray(11) + ", "+ rc.readSharedArray(10) + ", "+ rc.readSharedArray(9) + ", "+ rc.readSharedArray(8) + ", "+ rc.readSharedArray(15) + ", "+ rc.readSharedArray(14) + ", "+ rc.readSharedArray(13) + ", "+ rc.readSharedArray(12));
+
         if (headquartersLocation == null) {
             scanHeadquarters(rc);
         }
@@ -63,12 +64,18 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(!attemptedWellUpdate && wellLocation != null && resource != null){ //if robot has not checked with shared array, check for update
+        if(!attemptedWellUpdateAd && wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update            
             Communication.updateWellLocation(rc, resource, wellLocation);
-            attemptedWellUpdate = true;
+            attemptedWellUpdateAd = true;
+        }
+
+        else if (!attemptedWellUpdateMana && wellLocation != null && resource == ResourceType.MANA) {
+            Communication.updateWellLocation(rc, resource, wellLocation);
+            attemptedWellUpdateMana = true;
         }
         if (amount > 0) {
             if (rc.canTransferResource(headquartersLocation, type, amount)) rc.transferResource(headquartersLocation, type, amount);
+
         }
     }
 
@@ -94,6 +101,5 @@ public class CarrierStrategy {
         }
 
     }
-
 
 }
