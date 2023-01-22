@@ -210,7 +210,7 @@ class Communication {
             int location = locationToInt(rc, wellLoc);
             boolean exists = false;
             int emptySpot = 1;
-            if(resource.equals(ResourceType.ADAMANTIUM)) { //checks resource type
+            if(resource == ResourceType.ADAMANTIUM) { //checks resource type
                for (int i = 8; i < 12; i++) {
                 if (rc.readSharedArray(i) == location) { //checks location is not stored
                     exists = true;
@@ -223,7 +223,7 @@ class Communication {
                 rc.writeSharedArray(emptySpot, location);
                }
                 
-            } else if (resource.equals(ResourceType.MANA)) {
+            } else if (resource == ResourceType.MANA) {
                 for (int i = 12; i < 16; i++) {
                     if (rc.readSharedArray(i) == location) { //checks location is not stored
                         exists = true;
@@ -240,7 +240,7 @@ class Communication {
         
     }
 
-    private static int locationToInt(RobotController rc, MapLocation m) {
+    public static int locationToInt(RobotController rc, MapLocation m) {
         if (m == null) {
             return 0;
         }
