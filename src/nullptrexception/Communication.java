@@ -209,7 +209,7 @@ class Communication {
         if(rc.canWriteSharedArray(0,0)) { //checks if it can write
             int location = locationToInt(rc, wellLoc);
             boolean exists = false;
-            int emptySpot = 63;
+            int emptySpot = 1;
             if(resource.equals(ResourceType.ADAMANTIUM)) { //checks resource type
                for (int i = 8; i < 12; i++) {
                 if (rc.readSharedArray(i) == location) { //checks location is not stored
@@ -224,7 +224,7 @@ class Communication {
                }
                 
             } else if (resource.equals(ResourceType.MANA)) {
-                for (int i = 12; i < 15; i++) {
+                for (int i = 12; i < 16; i++) {
                     if (rc.readSharedArray(i) == location) { //checks location is not stored
                         exists = true;
                     }
@@ -265,9 +265,13 @@ class Communication {
         }
     }
 
-    static void scanWells(RobotController rc, MapLocation wellLocation) throws GameActionException {
+    static void scanWells(RobotController rc, MapLocation wellLocation, ResourceType rec) throws GameActionException {
         WellInfo[] wells = rc.senseNearbyWells();
-        if (wells.length > 0) wellLocation = wells[0].getMapLocation();
+        if (wells.length > 0) {
+            wellLocation = wells[0].getMapLocation();
+            rec = wells[0].getResourceType();
+        }
+
     }
 
 }
