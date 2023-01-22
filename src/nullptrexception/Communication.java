@@ -271,7 +271,7 @@ class Communication {
             wellLocation = wells[0].getMapLocation();
             rec = wells[0].getResourceType();
         }
-    
+
     }
 
 }
