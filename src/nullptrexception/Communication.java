@@ -205,7 +205,7 @@ class Communication {
         return answer;
     }
 
-    static void updateWellLocation(RobotController rc, ResourceType resource, MapLocation wellLoc) throws GameActionException { 
+    static void updateWellLocation(RobotController rc, ResourceType resource, MapLocation wellLoc) throws GameActionException {
         if(rc.canWriteSharedArray(0,0)) { //checks if it can write
             int location = locationToInt(rc, wellLoc);
             boolean exists = false;
@@ -222,7 +222,7 @@ class Communication {
                if(!exists) {
                 rc.writeSharedArray(emptySpot, location);
                }
-                
+
             } else if (resource == ResourceType.MANA) {
                 for (int i = 12; i < 16; i++) {
                     if (rc.readSharedArray(i) == location) { //checks location is not stored
@@ -237,7 +237,7 @@ class Communication {
                    }
             }
         }
-        
+
     }
 
     static int locationToInt(RobotController rc, MapLocation m) {
