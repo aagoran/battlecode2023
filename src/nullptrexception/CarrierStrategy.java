@@ -8,8 +8,6 @@ public class CarrierStrategy {
     static MapLocation wellLocation;
     static MapLocation islandLocation;
     static ResourceType resource;
-    static boolean attemptedWellUpdateAd = false;
-    static boolean attemptedWellUpdateMana = false;
 
 
     /**
@@ -34,7 +32,6 @@ public class CarrierStrategy {
         }
 
         // Transfer resource to headquarters
-        if (wellLocation != null)
         depositResource(rc, ResourceType.ADAMANTIUM);
         depositResource(rc, ResourceType.MANA);
 
@@ -64,14 +61,12 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(!attemptedWellUpdateAd && wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update            
+        if(wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update            
             Communication.updateWellLocation(rc, resource, wellLocation);
-            attemptedWellUpdateAd = true;
         }
 
-        else if (!attemptedWellUpdateMana && wellLocation != null && resource == ResourceType.MANA) {
+        else if (wellLocation != null && resource == ResourceType.MANA) {
             Communication.updateWellLocation(rc, resource, wellLocation);
-            attemptedWellUpdateMana = true;
         }
         if (amount > 0) {
             if (rc.canTransferResource(headquartersLocation, type, amount)) rc.transferResource(headquartersLocation, type, amount);
