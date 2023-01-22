@@ -8,6 +8,11 @@ public class HeadquartersStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runHeadquarters(RobotController rc) throws GameActionException {
+        // Write the location of a team headquarter on the first round
+        if (rc.getRoundNum() == 1) {
+            Communication.addHeadquarter(rc);
+        }
+
         // Pick a direction to build in.
         Direction dir = RobotPlayer.directions[RobotPlayer.rng.nextInt(RobotPlayer.directions.length)];
         MapLocation newLoc = rc.getLocation().add(dir);
@@ -28,6 +33,5 @@ public class HeadquartersStrategy {
                 rc.buildRobot(RobotType.LAUNCHER, newLoc);
             }
         }
-
     }
 }

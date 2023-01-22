@@ -15,7 +15,7 @@ public class CarrierStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runCarrier(RobotController rc) throws GameActionException {
-        rc.setIndicatorString("Well Location " + wellLocation  + " " + rc.readSharedArray(11) + ", "+ rc.readSharedArray(10) + ", "+ rc.readSharedArray(9) + ", "+ rc.readSharedArray(8) + ", "+ rc.readSharedArray(15) + ", "+ rc.readSharedArray(14) + ", "+ rc.readSharedArray(13) + ", "+ rc.readSharedArray(12));
+        rc.setIndicatorString("Well Location " + wellLocation  + " " + rc.readSharedArray(0) + " " + rc.readSharedArray(1) + " " + rc.readSharedArray(11) + ", "+ rc.readSharedArray(10) + ", "+ rc.readSharedArray(9) + ", "+ rc.readSharedArray(8) + ", "+ rc.readSharedArray(15) + ", "+ rc.readSharedArray(14) + ", "+ rc.readSharedArray(13) + ", "+ rc.readSharedArray(12));
 
         if (headquartersLocation == null) {
             scanHeadquarters(rc);
@@ -61,7 +61,7 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update            
+        if(wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update
             Communication.updateWellLocation(rc, resource, wellLocation);
         }
 
