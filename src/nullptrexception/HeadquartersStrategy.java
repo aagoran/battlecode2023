@@ -16,8 +16,10 @@ public class HeadquartersStrategy {
         // Pick a direction to build in.
         Direction dir = RobotPlayer.directions[RobotPlayer.rng.nextInt(RobotPlayer.directions.length)];
         MapLocation newLoc = rc.getLocation().add(dir);
+
+        // If we can build an anchor do it!
+        rc.setIndicatorString("Trying to build an anchor");
         if (rc.canBuildAnchor(Anchor.STANDARD) && rc.getResourceAmount(ResourceType.ADAMANTIUM) > 1000) {
-            // If we can build an anchor do it!
             rc.buildAnchor(Anchor.STANDARD);
         }
         if (RobotPlayer.rng.nextBoolean()) {
