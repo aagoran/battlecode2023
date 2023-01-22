@@ -15,8 +15,8 @@ public class CarrierStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runCarrier(RobotController rc) throws GameActionException {
-        rc.setIndicatorString("Well Location " + wellLocation);
-        //rc.setIndicatorString("well location: " + rc.readSharedArray(14));
+        rc.setIndicatorString("Well Location " + wellLocation + " " + rc.readSharedArray(12) 
+            + " " + rc.readSharedArray(13) + " " + rc.readSharedArray(14) + " " + rc.readSharedArray(15));
         // Scan for headquarters
         if (headquartersLocation == null) {
             scanHeadquarters(rc);
@@ -63,9 +63,9 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(!attemptedWellUpdate && wellLocation != null && resource != null){ //if robot has not checked with shared array, check for update
+        if(wellLocation != null && resource != null){ //if robot has not checked with shared array, check for update
             Communication.updateWellLocation(rc, resource, wellLocation);
-            attemptedWellUpdate = true;
+
         }
         if (amount > 0) {
             if (rc.canTransferResource(headquartersLocation, type, amount)) rc.transferResource(headquartersLocation, type, amount);
