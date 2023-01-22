@@ -4,4 +4,4 @@
 [4:7]   Enemy headquarters
 [8:11]  Adamantium wells
 [12:15] Mana wells
-[16:50] Island wells
+[16:50] Islands
