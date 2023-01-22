@@ -15,15 +15,16 @@ public class CarrierStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runCarrier(RobotController rc) throws GameActionException {
-        rc.setIndicatorString("well location: " + rc.readSharedArray(14));
+        rc.setIndicatorString("Well Location " + wellLocation);
+        //rc.setIndicatorString("well location: " + rc.readSharedArray(14));
         // Scan for headquarters
         if (headquartersLocation == null) {
-            Communication.scanHeadquarters(rc, headquartersLocation);
+            scanHeadquarters(rc);
         }
 
         // Scan for wells
         if (wellLocation == null) {
-            Communication.scanWells(rc, wellLocation, resource);
+            scanWells(rc);
         }
 
         // Collect resource from well if possible
@@ -32,6 +33,7 @@ public class CarrierStrategy {
         }
 
         // Transfer resource to headquarters
+        if (wellLocation != null)
         depositResource(rc, ResourceType.ADAMANTIUM);
         depositResource(rc, ResourceType.MANA);
 
@@ -72,6 +74,25 @@ public class CarrierStrategy {
 
     static int getTotalResources(RobotController rc) throws GameActionException {
         return rc.getResourceAmount(ResourceType.ADAMANTIUM) + rc.getResourceAmount(ResourceType.MANA);
+    }
+
+    static void scanHeadquarters(RobotController rc) throws GameActionException {
+        RobotInfo[] robots = rc.senseNearbyRobots();
+        for (RobotInfo robot : robots) {
+            if (robot.getTeam() == rc.getTeam() && robot.getType() == RobotType.HEADQUARTERS) {
+                headquartersLocation = robot.getLocation();
+                break;
+            }
+        }
+    }
+
+    static void scanWells(RobotController rc) throws GameActionException {
+        WellInfo[] wells = rc.senseNearbyWells();
+        if (wells.length > 0) {
+            wellLocation = wells[0].getMapLocation();
+            resource = wells[0].getResourceType();
+        }
+
     }
 
 
