@@ -9,7 +9,6 @@ public class CarrierStrategy {
     static MapLocation islandLocation;
     static ResourceType resource;
 
-
     /**
      * Run a single turn for a Carrier.
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
@@ -61,13 +60,11 @@ public class CarrierStrategy {
 
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
-        if(wellLocation != null &&  resource == ResourceType.ADAMANTIUM){ //if robot has not checked with shared array, check for update
+
+        if (!isWellLocationLogged && wellLocation != null && resource != null) {
             Communication.updateWellLocation(rc, resource, wellLocation);
         }
 
-        else if (wellLocation != null && resource == ResourceType.MANA) {
-            Communication.updateWellLocation(rc, resource, wellLocation);
-        }
         if (amount > 0) {
             if (rc.canTransferResource(headquartersLocation, type, amount)) rc.transferResource(headquartersLocation, type, amount);
 
