@@ -20,41 +20,52 @@ public class CarrierStrategy {
             scanHeadquarters(rc);
         }
 
-        // Scan for wells
-        if (wellLocation == null) {
-            scanWells(rc);
+        // check if hq has an anchor
+        if (rc.canTakeAnchor(headquartersLocation, Anchor.STANDARD)) {
+            rc.takeAnchor(headquartersLocation, Anchor.STANDARD);
         }
 
-        // Collect resource from well if possible
-        if (wellLocation != null && rc.canCollectResource(wellLocation, -1)) {
-            rc.collectResource(wellLocation, -1);
+        if (rc.getAnchor() != null) {
+            AnchorCarriers.runAnchorCarriers(rc);
         }
 
-        // Transfer resource to headquarters
-        depositResource(rc, ResourceType.ADAMANTIUM);
-        depositResource(rc, ResourceType.MANA);
+        else {
+            // Scan for wells
+            if (wellLocation == null) {
+                scanWells(rc);
+            }
 
-        int total = getTotalResources(rc);
+            // Collect resource from well if possible
+            if (wellLocation != null && rc.canCollectResource(wellLocation, -1)) {
+                rc.collectResource(wellLocation, -1);
+            }
 
-        if (total == 0)
-        {
-            if (wellLocation != null) {
-                MapLocation me = rc.getLocation();
-                Direction dir = me.directionTo(wellLocation);
+            // Transfer resource to headquarters
+            depositResource(rc, ResourceType.ADAMANTIUM);
+            depositResource(rc, ResourceType.MANA);
 
-                if (!rc.canCollectResource(me, 1)) {
-                    BugZero.moveTowards(rc, wellLocation);
+            int total = getTotalResources(rc);
+
+            if (total == 0)
+            {
+                if (wellLocation != null) {
+                    MapLocation me = rc.getLocation();
+                    Direction dir = me.directionTo(wellLocation);
+
+                    if (!rc.canCollectResource(me, 1)) {
+                        BugZero.moveTowards(rc, wellLocation);
+                    }
+
                 }
 
+                else {
+                    RobotPlayer.moveRandom(rc);
+                }
             }
 
-            else {
-                RobotPlayer.moveRandom(rc);
+            if (total == GameConstants.CARRIER_CAPACITY) {
+                BugZero.moveTowards(rc, headquartersLocation);
             }
-        }
-
-        if (total == GameConstants.CARRIER_CAPACITY) {
-            BugZero.moveTowards(rc, headquartersLocation);
         }
     }
 
