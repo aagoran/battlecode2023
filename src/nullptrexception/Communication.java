@@ -254,4 +254,10 @@ class Communication {
         m--;
         return new MapLocation(m % rc.getMapWidth(), m / rc.getMapWidth());
     }
+
+    static MapLocation getRotatedLocation(RobotController rc, MapLocation m) {
+        int x = rc.getMapWidth() - m.x - 1;
+        int y = rc.getMapHeight() - m.y - 1;
+        return new MapLocation(x, y);
+    }
 }
