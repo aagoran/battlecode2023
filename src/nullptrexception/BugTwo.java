@@ -6,6 +6,7 @@ public class BugTwo {
 
     static Direction currentDirection = null;
     static MapLocation curStart, curTarget;
+    static final int THRESHOLD = 5;
 
     static void moveTowards(RobotController rc, MapLocation target) throws GameActionException {
         if (curTarget != target) {
@@ -78,16 +79,16 @@ public class BugTwo {
         int x = loc.x;
         int y = loc.y;
 
-        if (x < curStart.x && x < curTarget.x) {
+        if (x < curStart.x - THRESHOLD && x < curTarget.x - THRESHOLD) {
             return true;
         }
-        if (x > curStart.x && x > curTarget.x) {
+        if (x > curStart.x + THRESHOLD && x > curTarget.x + THRESHOLD) {
             return true;
         }
-        if (y < curStart.y && y < curTarget.y) {
+        if (y < curStart.y - THRESHOLD && y < curTarget.y - THRESHOLD) {
             return true;
         }
-        if (y > curStart.y && y > curTarget.y) {
+        if (y > curStart.y + THRESHOLD && y > curTarget.y + THRESHOLD) {
             return true;
         }
         return false;
