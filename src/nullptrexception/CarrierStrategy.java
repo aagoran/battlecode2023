@@ -61,7 +61,7 @@ public class CarrierStrategy {
     static void depositResource(RobotController rc, ResourceType type) throws GameActionException {
         int amount = rc.getResourceAmount(type);
 
-        if (!isWellLocationLogged && wellLocation != null && resource != null) {
+        if (wellLocation != null && resource != null) {
             Communication.updateWellLocation(rc, resource, wellLocation);
         }
 
