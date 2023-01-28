@@ -260,4 +260,16 @@ class Communication {
         int y = rc.getMapHeight() - m.y - 1;
         return new MapLocation(x, y);
     }
+
+    static MapLocation getVFlipLocation(RobotController rc, MapLocation m) {
+        int x = m.x;
+        int y = rc.getMapHeight() - m.y - 1;
+        return new MapLocation(x, y);
+    }
+
+    static MapLocation getHFlipLocation(RobotController rc, MapLocation m) {
+        int x = rc.getMapWidth() - m.x - 1;
+        int y = m.y;
+        return new MapLocation(x, y);
+    }
 }
