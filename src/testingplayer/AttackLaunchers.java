@@ -13,7 +13,21 @@ public class AttackLaunchers {
         if (headquartersLocation == null) {
             scanHeadquarters(rc);
             if (headquartersLocation != null) {
+                //System.out.print("HQ Location Not Stored Somehow");
                 targetLocation = Communication.getRotatedLocation(rc, headquartersLocation);
+                // int random = RobotPlayer.rng.nextInt(4);
+                // switch (random) {
+                //     case 0:
+                //         targetLocation = Communication.getHFlipLocation(rc, headquartersLocation);
+                //         break;
+                //     case 1:
+                //         targetLocation = Communication.getVFlipLocation(rc, headquartersLocation);
+                //         break;
+                //     case 2:
+                //     case 3:
+                //         targetLocation = Communication.getRotatedLocation(rc, headquartersLocation);
+                //         break;
+                // }
             }
         }
         if (!randomMovement && targetLocation != null) {
