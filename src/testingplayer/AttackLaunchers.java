@@ -1,4 +1,4 @@
-package nullptrexception;
+package testingplayer;
 
 import battlecode.common.*;
 import java.util.ArrayList;
