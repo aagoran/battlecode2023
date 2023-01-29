@@ -15,7 +15,11 @@ public class BugZero {
             return;
         }
         Direction d = rc.getLocation().directionTo(target);
-        if (rc.canMove(d)) {
+        MapInfo info = rc.senseMapInfo(rc.getLocation().add(d));
+
+        boolean against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
+
+        if (rc.canMove(d) && !against) {
             rc.move(d);
             currentDirection = null; // there is no obstacle we're going around
         } else {
@@ -27,7 +31,11 @@ public class BugZero {
             }
             // Try to move in a way that keeps the obstacle on our right
             for (int i = 0; i < 8; i++) {
-                if (rc.canMove(currentDirection)) {
+                info = rc.senseMapInfo(rc.getLocation().add(currentDirection));
+
+                against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
+
+                if (rc.canMove(currentDirection) && !against) {
                     rc.move(currentDirection);
                     currentDirection = currentDirection.rotateRight();
                     break;
