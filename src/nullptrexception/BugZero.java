@@ -31,17 +31,19 @@ public class BugZero {
             }
             // Try to move in a way that keeps the obstacle on our right
             for (int i = 0; i < 8; i++) {
-                info = rc.senseMapInfo(rc.getLocation().add(currentDirection));
+                try {  // make sure robot doesn't try to go off the map
+                    info = rc.senseMapInfo(rc.getLocation().add(currentDirection));
 
-                against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
+                    against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
 
-                if (rc.canMove(currentDirection) && !against) {
-                    rc.move(currentDirection);
-                    currentDirection = currentDirection.rotateRight();
-                    break;
-                } else {
-                    currentDirection = currentDirection.rotateLeft();
-                }
+                    if (rc.canMove(currentDirection) && !against) {
+                        rc.move(currentDirection);
+                        currentDirection = currentDirection.rotateRight();
+                        break;
+                    } else {
+                        currentDirection = currentDirection.rotateLeft();
+                    }
+                } catch(Exception ignored) {}
             }
         }
     }
