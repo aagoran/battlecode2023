@@ -41,20 +41,21 @@ public class PatrolLaunchers {
         }
         if (!towardsHeadquarters && wellLocation != null) {
             BugZero.moveTowards(rc, wellLocation);
-            rc.setIndicatorString("Destination: " + Communication.locationToInt(rc, wellLocation));
+            //rc.setIndicatorString("Destination: " + wellLocation.x + ", " + wellLocation.y);
             if (rc.canSenseLocation(wellLocation)) {
                 towardsHeadquarters = true;
             }
         }
         else if (towardsHeadquarters) {
             BugZero.moveTowards(rc, headquartersLocation);
-            rc.setIndicatorString("Destination: " + Communication.locationToInt(rc, headquartersLocation));
+            //rc.setIndicatorString("Destination: " + headquartersLocation.x + ", " + headquartersLocation.y);
             if (rc.canSenseLocation(headquartersLocation)) {
                 towardsHeadquarters = false;
             }
         }
         else {
             RobotPlayer.moveRandom(rc);
+            //rc.setIndicatorString("Moving Randomly");
         }
     }
 
