@@ -15,11 +15,8 @@ public class BugZero {
             return;
         }
         Direction d = rc.getLocation().directionTo(target);
-        MapInfo info = rc.senseMapInfo(rc.getLocation().add(d));
-
-        boolean against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
-
-        if (rc.canMove(d) && !against) {
+        
+        if (rc.canMove(d) && rc.senseMapInfo(rc.getLocation().add(d)).getCurrentDirection().opposite().equals(d)) {
             rc.move(d);
             currentDirection = null; // there is no obstacle we're going around
         } else {
@@ -31,19 +28,13 @@ public class BugZero {
             }
             // Try to move in a way that keeps the obstacle on our right
             for (int i = 0; i < 8; i++) {
-                try {  // make sure robot doesn't try to go off the map
-                    info = rc.senseMapInfo(rc.getLocation().add(currentDirection));
-
-                    against = info.getMapLocation().add(info.getCurrentDirection()).equals(rc.getLocation());
-
-                    if (rc.canMove(currentDirection) && !against) {
-                        rc.move(currentDirection);
-                        currentDirection = currentDirection.rotateRight();
-                        break;
-                    } else {
-                        currentDirection = currentDirection.rotateLeft();
-                    }
-                } catch(Exception ignored) {}
+                if (rc.canMove(currentDirection) && !rc.senseMapInfo(rc.getLocation().add(d)).getCurrentDirection().opposite().equals(d)) {
+                    rc.move(currentDirection);
+                    currentDirection = currentDirection.rotateRight();
+                    break;
+                } else {
+                    currentDirection = currentDirection.rotateLeft();
+                }
             }
         }
     }
