@@ -8,6 +8,7 @@ public class AttackLaunchers {
     static MapLocation headquartersLocation;
     static MapLocation targetLocation;
     static boolean randomMovement = false;
+    // static boolean waitForGroup = true;
 
     static void runAttackLauncher(RobotController rc) throws GameActionException {
         if (headquartersLocation == null) {
@@ -30,12 +31,26 @@ public class AttackLaunchers {
                 // }
             }
         }
+        // RobotInfo[] robots = rc.senseNearbyRobots();
+        // Team myTeam = rc.getTeam();
+        // int count = 0;
+        // for (RobotInfo r: robots) {
+        //     if (r.getType() == RobotType.LAUNCHER && r.getTeam() == myTeam) {
+        //         count++;
+        //     }
+        //     if (count == 10) {
+        //         waitForGroup = true;
+        //         break;
+        //     }
+        // }
+        // if (!randomMovement && targetLocation != null && !waitForGroup) {
         if (!randomMovement && targetLocation != null) {
             if (!rc.canSenseLocation(targetLocation)) {
                 BugZero.moveTowards(rc, targetLocation);
             }
             // if there isn't an HQ at targetLocation, switch to random movement
             else if (!rc.canSenseRobotAtLocation(targetLocation)) {
+                // setting boolean to true makes sense but setting this to false works better
                 randomMovement = false;
             }
             // if there is an HQ at targetLocation, don't move because it is well placed
